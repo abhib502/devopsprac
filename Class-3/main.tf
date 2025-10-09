@@ -9,6 +9,7 @@ terraform {
 
 provider "azurerm" {
   features { 
+    # This is used for deleting Resource Group while it containes resources.
      resource_group {
       prevent_deletion_if_contains_resources = false
     }
@@ -16,14 +17,14 @@ provider "azurerm" {
   subscription_id = "d91d9d12-3e86-4333-a308-b94e4076556a"
 }
 
-/*resource "azurerm_resource_group" "resource_group" {
+resource "azurerm_resource_group" "resource_group" {
     name = "aresu"
     location = "Central India"
-}*/
+}
 
 resource "azurerm_storage_account" "storage" {
     # Code for Explicit Dependency
-   # depends_on = [ azurerm_resource_group.resource_group ]
+    depends_on = [ azurerm_resource_group.resource_group ]
     name = "astora"
     resource_group_name = "aresu"
     location = "Central India"
